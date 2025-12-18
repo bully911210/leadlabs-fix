@@ -41,8 +41,9 @@ jobs:
       - name: Build with Vite
         run: npm run build
         env:
-          # Pass Resend API key if available (optional for build)
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          # Email API endpoint for production builds
+          # Set this in repository secrets: Settings → Secrets → Actions
+          VITE_EMAIL_API_ENDPOINT: ${{ secrets.VITE_EMAIL_API_ENDPOINT }}
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

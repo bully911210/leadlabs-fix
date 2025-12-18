@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight, Check, AlertCircle } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { sendEmail, type EmailData } from "@/utils/email";
 
 interface ContactFormProps {
