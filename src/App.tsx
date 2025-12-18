@@ -8,9 +8,10 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Set basename for React Router based on build-time environment variable
-// Use VITE_BASE_PATH if set, otherwise default to root "/"
-// For GitHub Pages, set VITE_BASE_PATH="/leadlabs-fix/" in the build environment
+// Set basename for React Router using Vite's BASE_URL
+// BASE_URL is automatically set by Vite based on the 'base' config in vite.config.ts
+// For GitHub Pages: BASE_URL will be "/leadlabs-fix/" (set via VITE_BASE_PATH env var)
+// For Vercel/Netlify: BASE_URL will be "/" (default)
 const basename = import.meta.env.BASE_URL;
 
 const App = () => (

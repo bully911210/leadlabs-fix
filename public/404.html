@@ -22,7 +22,11 @@
       
       // Remove the base path to get the actual route
       if (repo !== '/' && path.startsWith(repo)) {
-        path = path.slice(repo.length - 1);
+        path = path.slice(repo.length);
+        // Ensure path starts with /
+        if (!path.startsWith('/')) {
+          path = '/' + path;
+        }
       }
       
       // If path exists and doesn't include index.html already
