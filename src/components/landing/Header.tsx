@@ -12,9 +12,10 @@ const Header = ({ onCtaClick }: HeaderProps) => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <img 
-              src="/labs-logo.svg" 
+              src="/labs.png" 
               alt="LeadLabs" 
               className="h-10 w-auto"
+              style={{ filter: 'brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(1295%) hue-rotate(145deg) brightness(93%) contrast(92%)' }}
             />
           </div>
 

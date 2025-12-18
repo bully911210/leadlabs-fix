@@ -39,21 +39,10 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: Request) {
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return new Response(
-      JSON.stringify({ error: 'Method not allowed' }),
-      { 
-        status: 405,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
-  }
-
-  // CORS headers - Update origin to match your GitHub Pages domain
+  // CORS headers - Allow requests from GitHub Pages domain
   const headers = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://bully911210.github.io', // Update this!
+    'Access-Control-Allow-Origin': '*', // Allow all origins for flexibility, or specify: 'https://bully911210.github.io'
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
@@ -61,6 +50,17 @@ export default async function handler(req: Request) {
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers });
+  }
+
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }),
+      { 
+        status: 405,
+        headers
+      }
+    );
   }
 
   try {
