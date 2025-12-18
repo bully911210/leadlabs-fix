@@ -8,10 +8,11 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Set basename for GitHub Pages deployment
-// In production, GitHub Pages serves from /repo-name/
-// In development, serves from root /
-const basename = import.meta.env.PROD ? "/leadlabs-fix" : "/";
+// Set basename for React Router using Vite's BASE_URL
+// BASE_URL is automatically set by Vite based on the 'base' config in vite.config.ts
+// For GitHub Pages: BASE_URL will be "/leadlabs-fix/" (set via VITE_BASE_PATH env var)
+// For Vercel/Netlify: BASE_URL will be "/" (default)
+const basename = import.meta.env.BASE_URL;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

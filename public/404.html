@@ -14,22 +14,35 @@
     // GitHub Pages will look for a 404.html when a direct URL is accessed
     // We use this to redirect to index.html with the path preserved
     (function() {
-      var path = window.location.pathname.slice(1);
-      var repo = '/leadlabs-fix/';
+      var path = window.location.pathname;
+      
+      // Check if we're on GitHub Pages (has repo name in path)
+      var repoMatch = path.match(/^\/([^\/]+)\//);
+      var repo = repoMatch ? '/' + repoMatch[1] + '/' : '/';
+      
+      // Remove the base path to get the actual route
+      if (repo !== '/' && path.startsWith(repo)) {
+        path = path.slice(repo.length);
+        // Ensure path starts with /
+        if (!path.startsWith('/')) {
+          path = '/' + path;
+        }
+      }
       
       // If path exists and doesn't include index.html already
-      if (path && path !== 'index.html') {
-        // Remove the repo prefix if present
-        if (path.startsWith('leadlabs-fix/')) {
-          path = path.slice('leadlabs-fix/'.length);
-        }
-        
-        // Redirect to index.html with the path as a fragment
+      if (path && path !== '/' && path !== '/index.html') {
+        // Redirect to index.html with the path preserved
         window.location.replace(
           window.location.origin + 
           repo + 
           '?redirect=' + encodeURIComponent(path)
         );
+      } else if (repo !== '/') {
+        // If we're at the root of a repo path, just go to the repo root
+        window.location.replace(window.location.origin + repo);
+      } else {
+        // Just go to root
+        window.location.replace(window.location.origin + '/');
       }
     })();
   </script>
