@@ -41,6 +41,8 @@ jobs:
       - name: Build with Vite
         run: npm run build
         env:
+          # Base path for GitHub Pages deployment (matches repository name)
+          VITE_BASE_PATH: /leadlabs-fix/
           # Email API endpoint for production builds
           # Set this in repository secrets: Settings → Secrets → Actions
           VITE_EMAIL_API_ENDPOINT: ${{ secrets.VITE_EMAIL_API_ENDPOINT }}

@@ -8,10 +8,10 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Set basename for GitHub Pages deployment
-// In production, GitHub Pages serves from /repo-name/
-// In development, serves from root /
-const basename = import.meta.env.PROD ? "/leadlabs-fix" : "/";
+// Set basename for React Router based on build-time environment variable
+// Use VITE_BASE_PATH if set, otherwise default to root "/"
+// For GitHub Pages, set VITE_BASE_PATH="/leadlabs-fix/" in the build environment
+const basename = import.meta.env.BASE_URL;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

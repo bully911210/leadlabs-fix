@@ -4,11 +4,39 @@ This document provides step-by-step instructions for deploying the LeadLabs webs
 
 ## Table of Contents
 
-1. [GitHub Pages Setup](#github-pages-setup)
-2. [Email Setup with Vercel](#email-setup-with-vercel)
-3. [Alternative Email Setup Options](#alternative-email-setup-options)
-4. [Verification](#verification)
-5. [Troubleshooting](#troubleshooting)
+1. [Configuration Overview](#configuration-overview)
+2. [GitHub Pages Setup](#github-pages-setup)
+3. [Vercel/Netlify Deployment](#vercelnettlify-deployment)
+4. [Email Setup with Vercel](#email-setup-with-vercel)
+5. [Alternative Email Setup Options](#alternative-email-setup-options)
+6. [Verification](#verification)
+7. [Troubleshooting](#troubleshooting)
+
+---
+
+## Configuration Overview
+
+The application uses environment variables to configure the base path for different deployment platforms.
+
+### Base Path Configuration
+
+- **GitHub Pages**: Requires a base path matching your repository name (e.g., `/leadlabs-fix/`)
+- **Vercel/Netlify/Other**: Uses root path (`/`)
+
+The `VITE_BASE_PATH` environment variable controls this behavior:
+
+```env
+# For GitHub Pages (set in GitHub Actions workflow)
+VITE_BASE_PATH=/leadlabs-fix/
+
+# For Vercel/Netlify/Local (default)
+VITE_BASE_PATH=/
+```
+
+This configuration is already set up in:
+- `.github/workflows/deploy.yml` for GitHub Pages (automatically set)
+- `.env.local` for local development (defaults to root)
+- `.env.example` as a template
 
 ---
 
@@ -49,6 +77,46 @@ The deployment will start automatically. You can monitor progress:
 Once deployed, your site will be available at:
 
 **https://bully911210.github.io/leadlabs-fix/**
+
+---
+
+## Vercel/Netlify Deployment
+
+If you prefer to deploy on Vercel or Netlify (instead of GitHub Pages), the application will automatically use the root path.
+
+### Vercel Deployment
+
+1. **Install Vercel CLI** (if not already installed):
+   ```sh
+   npm install -g vercel
+   ```
+
+2. **Deploy**:
+   ```sh
+   vercel login
+   vercel
+   ```
+
+3. **No additional configuration needed** - The app will automatically use root path (`/`) for Vercel.
+
+### Netlify Deployment
+
+1. **Install Netlify CLI**:
+   ```sh
+   npm install -g netlify-cli
+   ```
+
+2. **Deploy**:
+   ```sh
+   netlify login
+   netlify init
+   netlify deploy --prod
+   ```
+
+3. **Build settings** (if using Netlify dashboard):
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+   - No need to set `VITE_BASE_PATH` - defaults to root
 
 ---
 

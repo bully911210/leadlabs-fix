@@ -5,9 +5,10 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  // GitHub Pages deployment configuration
-  // Set base to repo name for proper asset loading on GitHub Pages
-  base: mode === "production" ? "/leadlabs-fix/" : "/",
+  // Base path configuration for different deployment environments
+  // Use VITE_BASE_PATH environment variable to override
+  // Default to root for Vercel/Netlify, or set to "/leadlabs-fix/" for GitHub Pages
+  base: process.env.VITE_BASE_PATH || "/",
   server: {
     host: "::",
     port: 8080,
