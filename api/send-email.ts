@@ -39,10 +39,19 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: Request) {
-  // CORS headers - Allow requests from GitHub Pages domain
+  // CORS headers - Allow requests from GitHub Pages and Vercel preview domains
+  const allowedOrigins = [
+    'https://bully911210.github.io',
+    'http://localhost:8080', // Development
+    'http://localhost:5173', // Vite dev server
+  ];
+  
+  const origin = req.headers.get('origin') || '';
+  const allowOrigin = allowedOrigins.includes(origin) ? origin : 'https://bully911210.github.io';
+  
   const headers = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*', // Allow all origins for flexibility, or specify: 'https://bully911210.github.io'
+    'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };

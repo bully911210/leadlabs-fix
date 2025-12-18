@@ -28,7 +28,9 @@
  */
 
 // Configuration
-// Default to Vercel deployment URL if not explicitly set
+// Default endpoint for production deployment on Vercel
+// This can be overridden by setting VITE_EMAIL_API_ENDPOINT environment variable
+// for custom deployments or different environments
 const DEFAULT_ENDPOINT = 'https://leadlabs-fix.vercel.app/api/send-email';
 const SERVERLESS_ENDPOINT_URL = import.meta.env.VITE_EMAIL_API_ENDPOINT || DEFAULT_ENDPOINT;
 const IS_DEVELOPMENT = import.meta.env.DEV;
