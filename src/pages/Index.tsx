@@ -71,7 +71,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
               <img 
-                src="/labs-logo.png" 
+                src="/labs-logo.svg" 
                 alt="LeadLabs" 
                 className="h-10 w-auto brightness-0 invert"
               />

@@ -1,19 +1,20 @@
 # Logo Setup Instructions
 
-## ⚠️ Action Required: Download Logo Image
+## ⚠️ Action Required: Replace Temporary Logo
 
-The logo image could not be automatically downloaded due to network restrictions in the build environment.
+A temporary SVG logo placeholder has been created. **You must replace it with the actual logo image from https://i.ibb.co/b5ZFvhnZ/labs.png**
 
 ### Manual Steps Required:
 
 1. **Download the logo image:**
    - Visit: https://i.ibb.co/b5ZFvhnZ/labs.png
-   - Download the image
-   - Save it as `labs-logo.png`
+   - Download the image to your computer
+   - Save it as `labs-logo.png` or `labs-logo.svg` (depending on the format)
 
-2. **Place the file in the correct location:**
-   - Move `labs-logo.png` to the `/public/` directory
-   - Path should be: `/public/labs-logo.png`
+2. **Replace the temporary file:**
+   - Delete the current placeholder: `/public/labs-logo.svg`
+   - Copy your downloaded logo to: `/public/labs-logo.png` (or `.svg`)
+   - If using PNG format, update the file extensions in the components (see below)
 
 3. **Verify the implementation:**
    - The logo is already configured in the Header component (`src/components/landing/Header.tsx`)
@@ -33,7 +34,7 @@ If you want to embed the logo directly in the code:
 **Header (src/components/landing/Header.tsx):**
 ```tsx
 <img 
-  src="/labs-logo.png" 
+  src="/labs-logo.svg"  // Change to .png if using PNG
   alt="LeadLabs" 
   className="h-10 w-auto"
 />
@@ -42,7 +43,7 @@ If you want to embed the logo directly in the code:
 **Footer (src/pages/Index.tsx):**
 ```tsx
 <img 
-  src="/labs-logo.png" 
+  src="/labs-logo.svg"  // Change to .png if using PNG
   alt="LeadLabs" 
   className="h-10 w-auto brightness-0 invert"
 />
