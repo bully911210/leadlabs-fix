@@ -39,11 +39,15 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: Request) {
-  // CORS headers - Allow requests from GitHub Pages and Vercel preview domains
+  // CORS headers - Allow requests from GitHub Pages and local development
   const allowedOrigins = [
     'https://bully911210.github.io',
-    'http://localhost:8080', // Development
-    'http://localhost:5173', // Vite dev server
+    'http://localhost:8080', // Vite dev server (configured port)
+    'http://localhost:5173', // Vite default dev server
+    'http://localhost:3000', // Common dev port
+    'http://127.0.0.1:8080',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000',
   ];
   
   const origin = req.headers.get('origin') || '';

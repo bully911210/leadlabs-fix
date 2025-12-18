@@ -72,15 +72,6 @@ export async function sendEmail(data: EmailData): Promise<EmailResponse> {
   }
 
   // Production mode: Call serverless endpoint
-  if (!SERVERLESS_ENDPOINT_URL) {
-    console.error('❌ No serverless endpoint configured for email sending');
-    return {
-      success: false,
-      message: 'Email service not configured',
-      error: 'Please configure VITE_EMAIL_API_ENDPOINT environment variable',
-    };
-  }
-
   try {
     const response = await fetch(SERVERLESS_ENDPOINT_URL, {
       method: 'POST',
