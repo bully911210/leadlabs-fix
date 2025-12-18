@@ -1,44 +1,38 @@
 /**
- * Email Utility for Resend API
+ * Email Utility for Resend API - Fully Integrated
  * 
- * IMPORTANT: GitHub Pages Static Hosting Limitation
- * ===================================================
- * GitHub Pages only serves static files and cannot execute server-side code.
- * The Resend API requires a server-side environment to securely use API keys.
+ * INTEGRATED SETUP:
+ * ================
+ * This utility is fully configured to work with the Resend API through a serverless function.
  * 
- * This utility provides two approaches:
+ * DEPLOYMENT ARCHITECTURE:
+ * -----------------------
+ * 1. Frontend (GitHub Pages): Hosts the static website
+ * 2. API Function (Vercel): Handles email sending via Resend API
  * 
- * 1. DEVELOPMENT/TESTING: Mock email sending that logs to console
- * 2. PRODUCTION: Requires a serverless function endpoint
+ * CONFIGURATION:
+ * -------------
+ * - Frontend: Automatically uses the Vercel endpoint (configured below)
+ * - API Function: Reads RESEND_API_KEY from Vercel environment variables
+ * - Override: Set VITE_EMAIL_API_ENDPOINT to use a custom endpoint
  * 
- * RECOMMENDED DEPLOYMENT OPTIONS:
- * --------------------------------
- * For production email functionality, you need to deploy a serverless endpoint:
+ * MODES:
+ * ------
+ * - Development: Logs email data to console (no actual sending)
+ * - Production: Sends real emails via Vercel serverless function + Resend API
  * 
- * Option A: Vercel Edge Functions (Recommended)
- *   - Create /api/send-email.ts in your repo
- *   - Deploy to Vercel (vercel.com)
- *   - Set RESEND_API_KEY in Vercel environment variables
- *   - Update SERVERLESS_ENDPOINT_URL below to your Vercel URL
- * 
- * Option B: Netlify Functions
- *   - Create /netlify/functions/send-email.ts
- *   - Deploy to Netlify (netlify.com)
- *   - Set RESEND_API_KEY in Netlify environment variables
- *   - Update SERVERLESS_ENDPOINT_URL below
- * 
- * Option C: AWS Lambda + API Gateway
- *   - Deploy Lambda function with Resend integration
- *   - Update SERVERLESS_ENDPOINT_URL below
- * 
- * Option D: Keep using GitHub Pages for static content, but host email API separately
- *   - Deploy a simple Node.js/Express API on any hosting platform
- *   - Implement CORS to allow requests from your GitHub Pages domain
- *   - Update SERVERLESS_ENDPOINT_URL below
+ * ENVIRONMENT VARIABLES:
+ * ---------------------
+ * - RESEND_API_KEY: Set in Vercel dashboard (required for production)
+ * - VITE_EMAIL_API_ENDPOINT: Optional override for API endpoint URL
  */
 
 // Configuration
-const SERVERLESS_ENDPOINT_URL = import.meta.env.VITE_EMAIL_API_ENDPOINT || '';
+// Default endpoint for production deployment on Vercel
+// This can be overridden by setting VITE_EMAIL_API_ENDPOINT environment variable
+// for custom deployments or different environments
+const DEFAULT_ENDPOINT = 'https://leadlabs-fix.vercel.app/api/send-email';
+const SERVERLESS_ENDPOINT_URL = import.meta.env.VITE_EMAIL_API_ENDPOINT || DEFAULT_ENDPOINT;
 const IS_DEVELOPMENT = import.meta.env.DEV;
 
 export interface EmailData {
@@ -78,15 +72,6 @@ export async function sendEmail(data: EmailData): Promise<EmailResponse> {
   }
 
   // Production mode: Call serverless endpoint
-  if (!SERVERLESS_ENDPOINT_URL) {
-    console.error('❌ No serverless endpoint configured for email sending');
-    return {
-      success: false,
-      message: 'Email service not configured',
-      error: 'Please configure VITE_EMAIL_API_ENDPOINT environment variable',
-    };
-  }
-
   try {
     const response = await fetch(SERVERLESS_ENDPOINT_URL, {
       method: 'POST',

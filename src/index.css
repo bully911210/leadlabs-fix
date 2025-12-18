@@ -153,4 +153,13 @@
   .price-display {
     @apply text-2xl md:text-3xl font-bold text-primary;
   }
+
+  /* Logo color tinting to match primary teal color (hsl(168 84% 32%)) 
+   * This filter transforms any logo to the site's primary teal color
+   * Original: Any color → Target: hsl(168, 84%, 32%) / rgb(13, 149, 124)
+   * Filter generated using CSS filter generator for precise color matching
+   */
+  .logo-teal-tint {
+    filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(1295%) hue-rotate(145deg) brightness(93%) contrast(92%);
+  }
 }

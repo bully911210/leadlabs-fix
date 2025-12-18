@@ -12,9 +12,9 @@ const Header = ({ onCtaClick }: HeaderProps) => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <img 
-              src="/labs-logo.svg" 
+              src="/labs.png" 
               alt="LeadLabs" 
-              className="h-10 w-auto"
+              className="h-10 w-auto logo-teal-tint"
             />
           </div>
 

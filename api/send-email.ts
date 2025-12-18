@@ -39,21 +39,23 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: Request) {
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return new Response(
-      JSON.stringify({ error: 'Method not allowed' }),
-      { 
-        status: 405,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    );
-  }
-
-  // CORS headers - Update origin to match your GitHub Pages domain
+  // CORS headers - Allow requests from GitHub Pages and local development
+  const allowedOrigins = [
+    'https://bully911210.github.io',
+    'http://localhost:8080', // Vite dev server (configured port)
+    'http://localhost:5173', // Vite default dev server
+    'http://localhost:3000', // Common dev port
+    'http://127.0.0.1:8080',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000',
+  ];
+  
+  const origin = req.headers.get('origin') || '';
+  const allowOrigin = allowedOrigins.includes(origin) ? origin : 'https://bully911210.github.io';
+  
   const headers = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://bully911210.github.io', // Update this!
+    'Access-Control-Allow-Origin': allowOrigin,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
@@ -61,6 +63,17 @@ export default async function handler(req: Request) {
   // Handle preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers });
+  }
+
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return new Response(
+      JSON.stringify({ error: 'Method not allowed' }),
+      { 
+        status: 405,
+        headers
+      }
+    );
   }
 
   try {
