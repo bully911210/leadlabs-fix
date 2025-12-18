@@ -70,10 +70,11 @@ const Index = () => {
         <div className="container-narrow">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-sm font-bold text-primary-foreground">LL</span>
-              </div>
-              <span className="text-xl font-bold text-background">LeadLabs</span>
+              <img 
+                src="/labs-logo.png" 
+                alt="LeadLabs" 
+                className="h-10 w-auto brightness-0 invert"
+              />
             </div>
             <div className="flex items-center gap-6 text-sm text-background/60">
               <span>© {new Date().getFullYear()} LeadLabs</span>
