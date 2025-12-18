@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, Check } from "lucide-react";
+import { sendEmail, type EmailData } from "@/utils/email";
 
 interface ContactFormProps {
   onClose?: () => void;
@@ -29,16 +30,45 @@ const ContactForm = ({ onClose }: ContactFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      // Send email using Resend API
+      const emailData: EmailData = {
+        businessName: formData.businessName,
+        contactName: formData.contactName,
+        email: formData.email,
+        phone: formData.phone,
+        hasWebsite: formData.hasWebsite,
+        websiteUrl: formData.websiteUrl,
+        notes: formData.notes,
+      };
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    toast({
-      title: "Form submitted successfully",
-      description: "We'll be in touch within 24 hours.",
-    });
+      const result = await sendEmail(emailData);
+
+      if (result.success) {
+        setIsSubmitted(true);
+        toast({
+          title: "Form submitted successfully",
+          description: "We'll be in touch within 24 hours.",
+        });
+      } else {
+        // Handle email sending failure
+        toast({
+          variant: "destructive",
+          title: "Failed to send message",
+          description: result.message,
+        });
+      }
+    } catch (error) {
+      // Handle unexpected errors
+      toast({
+        variant: "destructive",
+        title: "An error occurred",
+        description: "Please try again or contact us directly.",
+      });
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

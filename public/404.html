@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeadLabs - Loading...</title>
+  <!-- 
+    GitHub Pages SPA fallback
+    This redirects 404 errors back to index.html with the path preserved in the URL fragment
+    The React Router will then handle the routing on the client side
+  -->
+  <script>
+    // Store the current path and redirect to index.html
+    // GitHub Pages will look for a 404.html when a direct URL is accessed
+    // We use this to redirect to index.html with the path preserved
+    (function() {
+      var path = window.location.pathname.slice(1);
+      var repo = '/leadlabs-fix/';
+      
+      // If path exists and doesn't include index.html already
+      if (path && path !== 'index.html') {
+        // Remove the repo prefix if present
+        if (path.startsWith('leadlabs-fix/')) {
+          path = path.slice('leadlabs-fix/'.length);
+        }
+        
+        // Redirect to index.html with the path as a fragment
+        window.location.replace(
+          window.location.origin + 
+          repo + 
+          '?redirect=' + encodeURIComponent(path)
+        );
+      }
+    })();
+  </script>
+</head>
+<body>
+  <div style="text-align: center; padding: 50px; font-family: system-ui, -apple-system, sans-serif;">
+    <h1>Loading...</h1>
+    <p>Redirecting to the correct page...</p>
+  </div>
+</body>
+</html>
